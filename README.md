@@ -1,4 +1,4 @@
-# Laporan Resmi Praktikum Jarkom Modul-1 2024
+# Laporan Resmi Praktikum Jarkom Modul-2 2024
 
 ---
 
