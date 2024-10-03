@@ -290,6 +290,7 @@ service bind9 restart
 !![Screenshot 2024-10-04 003418](https://github.com/user-attachments/assets/c04c3ce0-14c3-4d2a-9430-a272923257ed)
 ![Screenshot 2024-10-04 003432](https://github.com/user-attachments/assets/2cc8eda3-f0e0-46c6-be7d-cd2f6a684a3d)
 ![Screenshot 2024-10-04 003444](https://github.com/user-attachments/assets/1e6a11c1-5e77-4fa2-85a4-a68a882791a0)
+![Screenshot 2024-10-04 012403](https://github.com/user-attachments/assets/9d858263-4ef1-4e68-9c9a-c5768c832d5e)
 
 !
 !
