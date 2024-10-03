@@ -249,7 +249,7 @@ Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibut
    ;
    $TTL    604800
    @       IN      SOA     pasopati.it03.com. root.pasopati.it03.com. (
-                        2023101012      ; Serial
+                        2023101001      ; Serial
                         604800         ; Refresh
                         86400         ; Retry
                         2419200         ; Expire
@@ -297,7 +297,7 @@ Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataa
    ;
    $TTL    604800
    @       IN      SOA     rujapala.it03.com. rujapala.it03.com. (
-                        2024100312      ; Serial
+                        2024100301      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
