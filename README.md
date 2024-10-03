@@ -264,7 +264,7 @@ $TTL    604800
                         604800 )       ; Negative Cache TTL
 ;
 @       IN      NS      pasopati.it03.com.
-@       IN      A       10.69.0.2     ; IP Stalber
+@       IN      A       10.65.2.6     ; IP Stalber
 www     IN      CNAME   pasopati.it03.com.' > /etc/bind/jarkom/pasopati.it03.com
 
 service bind9 restart
@@ -273,6 +273,13 @@ service bind9 restart
 
 ### Dokumentasi Pengerjaan
 
-!![Screenshot 2024-10-04 000702](https://github.com/user-attachments/assets/8562cc57-6158-446b-84f6-c5c1016a5621)
+!![Screenshot 2024-10-04 003555](https://github.com/user-attachments/assets/a0caf412-c864-45a6-990b-bc157c4b5f2b)
+!![Screenshot 2024-10-04 003432](https://github.com/user-attachments/assets/6b6f95a7-6b61-48cc-88b3-cdbd82470a22)
 
+---
+## Soal 4
+---
+
+!![Screenshot 2024-10-04 003631](https://github.com/user-attachments/assets/cfc405b1-cae3-4e1d-84e0-ab5caaae4db9)
+!![Screenshot 2024-10-04 003444](https://github.com/user-attachments/assets/3273a7b1-07d6-4025-ba2e-00047fb38088)
 
