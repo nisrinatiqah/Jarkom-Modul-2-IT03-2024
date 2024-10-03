@@ -14,6 +14,7 @@
 - [Soal 3](#soal-3)
 - [Soal 4](#soal-4)
 - [Soal 5](#soal-5)
+- [Soal 8](#soal-8)
 
 
 ## Topologi
