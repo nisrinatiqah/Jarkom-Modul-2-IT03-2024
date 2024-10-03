@@ -283,3 +283,13 @@ service bind9 restart
 !![Screenshot 2024-10-04 003631](https://github.com/user-attachments/assets/cfc405b1-cae3-4e1d-84e0-ab5caaae4db9)
 !![Screenshot 2024-10-04 003444](https://github.com/user-attachments/assets/3273a7b1-07d6-4025-ba2e-00047fb38088)
 
+---
+## Soal 5
+---
+
+!![Screenshot 2024-10-04 003418](https://github.com/user-attachments/assets/c04c3ce0-14c3-4d2a-9430-a272923257ed)
+![Screenshot 2024-10-04 003432](https://github.com/user-attachments/assets/2cc8eda3-f0e0-46c6-be7d-cd2f6a684a3d)
+![Screenshot 2024-10-04 003444](https://github.com/user-attachments/assets/1e6a11c1-5e77-4fa2-85a4-a68a882791a0)
+
+!
+!
