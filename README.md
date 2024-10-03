@@ -185,14 +185,15 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
    
     Masukkan :
     ```
-   echo 'zone "sudarsana.it03.com" {
+    echo 'zone "sudarsana.it03.com" {
     type master;
-    file "/etc/bind/modul2/sudarsana.it03.com";
+    notify yes;
+    file "/etc/bind/jarkom/sudarsana.it03.com";
    };' > /etc/bind/named.conf.local
+ 
+    mkdir /etc/bind/jarkom
 
-    mkdir -p /etc/bind/modul2
-
-    cp /etc/bind/db.local /etc/bind/modul2/sudarsana.it03.com
+    cp /etc/bind/db.local /etc/bind/jarkom/sudarsana.it03.com
 
     echo '
     ;
@@ -200,17 +201,17 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
     ;
     $TTL    604800
     @       IN      SOA     root.sudarsana.it03.com. admin.sudarsana.it03.com. (
-                        2024100312      ; Serial
+                        2023101001      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
    ;
    @       IN      NS      sudarsana.it03.com.
-   @       IN      A       10.65.2.2     ; IP Solok
-   www     IN      CNAME   sudarsana.it03.com.' > /etc/bind/modul2/sudarsana.it03.com
+   @       IN      A       10.65.2.6     ; IP Solok
+   www     IN      CNAME   sudarsana.it03.com.' > /etc/bind/jarkom/sudarsana.it03.com
     
-   sudo service bind9 restart
+   service bind9 restart
     ```
 
 3. Install BIND dengan command :
@@ -283,30 +284,31 @@ Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataa
 1. Tambahkan script ini ke dalam `/root/.bashrc`
    ```
    echo 'zone "rujapala.it03.com" {
-	type master;
-	file "/etc/bind/modul2/rujapala.it03.com";
+    type master;
+    notify yes;
+    file "/etc/bind/jarkom/rujapala.it03.com";
    };' > /etc/bind/named.conf.local
+ 
+    mkdir /etc/bind/jarkom
 
-   mkdir -p /etc/bind/modul2
+    cp /etc/bind/db.local /etc/bind/jarkom/rujapala.it03.com
 
-   cp /etc/bind/db.local /etc/bind/modul2/rujapala.it03.com
-
-   echo '
-   ;
-   ; BIND data file for local loopback interface
-   ;
-   $TTL    604800
-   @       IN      SOA     rujapala.it03.com. rujapala.it03.com. (
-                        2024100301      ; Serial
+    echo '
+    ;
+    ; BIND data file for local loopback interface
+    ;
+    $TTL    604800
+    @       IN      SOA     root.rujapala.it03.com. admin.rujapala.it03.com. (
+                        2023101001      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
    ;
    @       IN      NS      rujapala.it03.com.
-   @       IN      A       10.65.2.6     ; IP Tanjungkulai
-   www     IN      CNAME   rujapala.it45.com.' > /etc/bind/modul2/rujapala.it03.com
-
+   @       IN      A       10.65.2.3     ; IP Tanjungkulai
+   www     IN      CNAME   rujapala.it03.com.' > /etc/bind/jarkom/rujapala.it03.com
+    
    service bind9 restart
    ```
    
@@ -354,3 +356,47 @@ ping pasopati.it03.com
 
 
 
+---
+## Soal 8
+---
+Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembunyi di Ohio dengan subdomain cakra.sudarsana.xxxx.com yang mengarah ke Bedahulu.
+
+### Penyelesaian
+1. Tambahkan script ini ke dalam `/root/.bashrc`
+   ```
+   echo 'zone "sudarsana.it03.com" {
+    type master;
+    notify yes;
+    file "/etc/bind/jarkom/sudarsana.it03.com";
+   };' > /etc/bind/named.conf.local
+ 
+    mkdir /etc/bind/jarkom
+
+    cp /etc/bind/db.local /etc/bind/jarkom/sudarsana.it03.com
+
+    echo '
+    ;
+    ; BIND data file for local loopback interface
+    ;
+    $TTL    604800
+    @       IN      SOA     root.sudarsana.it03.com. admin.sudarsana.it03.com. (
+                        2023101001      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+   ;
+   @       IN      NS      sudarsana.it03.com.
+   @       IN      A       10.65.2.6     ; IP Solok
+   www     IN      CNAME   sudarsana.it03.com.
+   cakra       IN      A       10.65.2.2     ; IP Bedahulu
+   www     IN      CNAME   sudarsana.it03.com.' > /etc/bind/jarkom/sudarsana.it03.com
+    
+   service bind9 restart
+   ```
+   
+2. Tes PING dengan command ini
+   ```
+   ping cakra.sudarsana.it03.com
+   ```
+   
