@@ -17,7 +17,7 @@
 
 
 ## Topologi
-![alt text](image.png)
+![Screenshot 2024-10-03 221802](https://github.com/user-attachments/assets/f9ee3f5f-2e93-4852-827f-5940e12f8711)
 
 
 ---
@@ -27,6 +27,7 @@ Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya me
 
 ### Penyelesaian
 Kita buat dulu configuration nya, sebagai berikut :
+
 **Nusantara (Router)**
 ```
 auto eth0
@@ -66,7 +67,7 @@ iface eth0 inet static
     gateway 10.65.2.1
 ```
 
-***Bedahulu (Web Server)**
+**Bedahulu (Web Server)**
 ```
 auto eth0
 iface eth0 inet static
@@ -75,7 +76,7 @@ iface eth0 inet static
     gateway 10.65.2.1
 ```
 
-***Kotalingga (Web Server)**
+**Kotalingga (Web Server)**
 ```
 auto eth0
 iface eth0 inet static
@@ -140,19 +141,32 @@ iface eth0 inet static
 
 Buka web console :
 1. Mengecek IP nameserver dengan menjalankan command ini di web console Router (Nusantara).
-```cat /etc/resolv.conf```
-2. Edit file `/root/.bashrc` di semua node (kecuali Nusantara), dengan menggunakan command
-```nano /root/.bashrc```
-3. Tambahkan command `echo 'nameserver 192.168.122.1' > /etc/resolv.conf`
-4. Install `bind9` di DNS Master (Sriwijaya), dengan command 
-```apt-get install bind9 -y```
-5. Lakukan NAT di web console node Nusantara dengan command
-```iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.65.0.0/16```
+   ```
+   cat /etc/resolv.conf
+   ```
+3. Edit file `/root/.bashrc` di semua node (kecuali Nusantara), dengan menggunakan command
+   ```
+   nano /root/.bashrc
+   ```
+4. Tambahkan command `echo 'nameserver 192.168.122.1' > /etc/resolv.conf`
+5. Install `bind9` di DNS Master (Sriwijaya), dengan command 
+   ```
+   apt-get install bind9 -y
+   ```
+6. Lakukan NAT di web console node Nusantara dengan command
+   ```
+   iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.65.0.0/16
+   ```
+7. Tes PING di web console node untuk memastikan berhasil atau tidaknya
 
 
 ### Hasil & Dokumentasi Pengerjaaan
-!![WhatsApp Image 2024-10-03 at 21 38 01_45db5bfc](https://github.com/user-attachments/assets/26505277-6594-43a5-8d4d-9ee838868282)
-!![WhatsApp Image 2024-10-03 at 21 42 01_49932ff1](https://github.com/user-attachments/assets/e43a4901-8ebc-4877-8e91-90f5649f423c)
+![WhatsApp Image 2024-10-03 at 21 38 01_45db5bfc](https://github.com/user-attachments/assets/26505277-6594-43a5-8d4d-9ee838868282)
+
+![WhatsApp Image 2024-10-03 at 21 42 01_49932ff1](https://github.com/user-attachments/assets/e43a4901-8ebc-4877-8e91-90f5649f423c)
+
+![image](https://github.com/user-attachments/assets/ffe5360c-da6c-40c9-a105-ed8f63acf258)
+
 
 
 
@@ -163,18 +177,20 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
 
 ### Penyelesaian 
 1. Edit nameserver file `/etc/resolv.conf` . Isi dengan :
-    ```nameserver 192.168.122.1
-       nameserver 10.65.2.5
     ```
-2. Tambahkan script kedalam file `/root/.bashrc`
-    ```nano /root/.bashrc```
+    nameserver 192.168.122.1
+    nameserver 10.65.2.5
+    ```
+2. Tambahkan script kedalam file `/root/.bashrc` dengan
+   ```nano /root/.bashrc```
+   
     Masukkan :
     ```
     # Konfigurasi zona DNS di named.conf.local
-echo 'zone "sudarsana.it03.com" {
+   echo 'zone "sudarsana.it03.com" {
     type master;
     file "/etc/bind/jarkom/sudarsana.it03.com";
-};' > /etc/bind/named.conf.local
+   };' > /etc/bind/named.conf.local
 
     # Membuat direktori jika belum ada
     mkdir -p /etc/bind/jarkom
@@ -194,13 +210,13 @@ echo 'zone "sudarsana.it03.com" {
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
-;
-@       IN      NS      sudarsana.it03.com.
-@       IN      A       10.65.2.2     ; IP Solok
-www     IN      CNAME   sudarsana.it03.com.' > /etc/bind/jarkom/sudarsana.it03.com
+   ;
+   @       IN      NS      sudarsana.it03.com.
+   @       IN      A       10.65.2.2     ; IP Solok
+   www     IN      CNAME   sudarsana.it03.com.' > /etc/bind/jarkom/sudarsana.it03.com
 
     # Restart service BIND
-sudo service bind9 restart
+   sudo service bind9 restart
     ```
 
 3. Install BIND dengan command :
@@ -210,8 +226,10 @@ sudo service bind9 restart
 5. Tes PING ke domain yang sudah ditentukan di web console node Sriwijaya dengan command :
     ```ping sudarsana.it03.com```
 
-### Dokumentasi Pengerjaan
-![alt text](image-1.png)
+### Hasil & Dokumentasi Pengerjaan
+![Screenshot 2024-10-03 223035](https://github.com/user-attachments/assets/df4aea13-f080-4d43-99d5-1dfe3ddec042)
+
+
 
 
 
