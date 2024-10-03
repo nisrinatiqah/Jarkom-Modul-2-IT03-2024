@@ -160,13 +160,12 @@ Buka web console :
 7. Tes PING di web console node untuk memastikan berhasil atau tidaknya
 
 
-### Hasil & Dokumentasi Pengerjaaan
+### Hasil Dokumentasi Pengerjaaan
 ![WhatsApp Image 2024-10-03 at 21 38 01_45db5bfc](https://github.com/user-attachments/assets/26505277-6594-43a5-8d4d-9ee838868282)
 
 ![WhatsApp Image 2024-10-03 at 21 42 01_49932ff1](https://github.com/user-attachments/assets/e43a4901-8ebc-4877-8e91-90f5649f423c)
 
 ![image](https://github.com/user-attachments/assets/ffe5360c-da6c-40c9-a105-ed8f63acf258)
-
 
 
 
@@ -186,19 +185,15 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
    
     Masukkan :
     ```
-    # Konfigurasi zona DNS di named.conf.local
    echo 'zone "sudarsana.it03.com" {
     type master;
-    file "/etc/bind/jarkom/sudarsana.it03.com";
+    file "/etc/bind/modul2/sudarsana.it03.com";
    };' > /etc/bind/named.conf.local
 
-    # Membuat direktori jika belum ada
-    mkdir -p /etc/bind/jarkom
+    mkdir -p /etc/bind/modul2
 
-    # Menyalin template file db.local ke file zona baru
-    cp /etc/bind/db.local /etc/bind/jarkom/sudarsana.it03.com
+    cp /etc/bind/db.local /etc/bind/modul2/sudarsana.it03.com
 
-    # Menulis konfigurasi zona DNS
     echo '
     ;
     ; BIND data file for local loopback interface
@@ -213,9 +208,8 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
    ;
    @       IN      NS      sudarsana.it03.com.
    @       IN      A       10.65.2.2     ; IP Solok
-   www     IN      CNAME   sudarsana.it03.com.' > /etc/bind/jarkom/sudarsana.it03.com
-
-    # Restart service BIND
+   www     IN      CNAME   sudarsana.it03.com.' > /etc/bind/modul2/sudarsana.it03.com
+    
    sudo service bind9 restart
     ```
 
@@ -226,11 +220,8 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
 5. Tes PING ke domain yang sudah ditentukan di web console node Sriwijaya dengan command :
     ```ping sudarsana.it03.com```
 
-### Hasil & Dokumentasi Pengerjaan
+### Hasil Dokumentasi Pengerjaan
 ![Screenshot 2024-10-03 223035](https://github.com/user-attachments/assets/df4aea13-f080-4d43-99d5-1dfe3ddec042)
-
-
-
 
 
 
@@ -240,57 +231,126 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
 Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga. 
 
 ### Penyelesaian
-```
-echo 'zone "pasopati.it03.com" {
+1. Tambahkan script ini ke dalam `/root/.bashrc`
+   ```
+   echo 'zone "pasopati.it03.com" {
     type master;
     notify yes;
-    file "/etc/bind/jarkom/pasopati.it03.com";
-};' > /etc/bind/named.conf.local
+    file "/etc/bind/modul2/pasopati.it03.com";
+   };' > /etc/bind/named.conf.local
 
-mkdir /etc/bind/jarkom
+   mkdir /etc/bind/modul2
 
-cp /etc/bind/db.local /etc/bind/jarkom/pasopati.it03.com
+   cp /etc/bind/db.local /etc/bind/modul2/pasopati.it03.com
 
-echo '
-;
-; BIND data file for local loopback interface
-;
-$TTL    604800
-@       IN      SOA     pasopati.it03.com. root.pasopati.it03.com. (
-                        2023101001      ; Serial
+   echo '
+   ;
+   ; BIND data file for local loopback interface
+   ;
+   $TTL    604800
+   @       IN      SOA     pasopati.it03.com. root.pasopati.it03.com. (
+                        2023101012      ; Serial
                         604800         ; Refresh
                         86400         ; Retry
                         2419200         ; Expire
                         604800 )       ; Negative Cache TTL
-;
-@       IN      NS      pasopati.it03.com.
-@       IN      A       10.65.2.6     ; IP Stalber
-www     IN      CNAME   pasopati.it03.com.' > /etc/bind/jarkom/pasopati.it03.com
+   ;
+   @       IN      NS      pasopati.it03.com.
+   @       IN      A       10.65.2.6     ; IP Kotalingga
+   www     IN      CNAME   pasopati.it03.com.' > /etc/bind/modul2/pasopati.it03.com
 
-service bind9 restart
+   service bind9 restart
+   ```
+   
+2. Tes PING dengan command ini
+   ```
+   ping pasopati.it03.com
+   ```
+   
+### Dokumentasi Hasil Pengerjaan
+![Screenshot 2024-10-04 003555](https://github.com/user-attachments/assets/a0caf412-c864-45a6-990b-bc157c4b5f2b)
 
-```
+![Screenshot 2024-10-04 003432](https://github.com/user-attachments/assets/6b6f95a7-6b61-48cc-88b3-cdbd82470a22)
 
-### Dokumentasi Pengerjaan
 
-!![Screenshot 2024-10-04 003555](https://github.com/user-attachments/assets/a0caf412-c864-45a6-990b-bc157c4b5f2b)
-!![Screenshot 2024-10-04 003432](https://github.com/user-attachments/assets/6b6f95a7-6b61-48cc-88b3-cdbd82470a22)
 
 ---
 ## Soal 4
 ---
+Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com.
 
-!![Screenshot 2024-10-04 003631](https://github.com/user-attachments/assets/cfc405b1-cae3-4e1d-84e0-ab5caaae4db9)
-!![Screenshot 2024-10-04 003444](https://github.com/user-attachments/assets/3273a7b1-07d6-4025-ba2e-00047fb38088)
+### Penyelesaian
+1. Tambahkan script ini ke dalam `/root/.bashrc`
+   ```
+   echo 'zone "rujapala.it03.com" {
+	type master;
+	file "/etc/bind/modul2/rujapala.it03.com";
+   };' > /etc/bind/named.conf.local
+
+   mkdir -p /etc/bind/modul2
+
+   cp /etc/bind/db.local /etc/bind/modul2/rujapala.it03.com
+
+   echo '
+   ;
+   ; BIND data file for local loopback interface
+   ;
+   $TTL    604800
+   @       IN      SOA     rujapala.it03.com. rujapala.it03.com. (
+                        2024100312      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+   ;
+   @       IN      NS      rujapala.it03.com.
+   @       IN      A       10.65.2.6     ; IP Tanjungkulai
+   www     IN      CNAME   rujapala.it45.com.' > /etc/bind/modul2/rujapala.it03.com
+
+   service bind9 restart
+   ```
+   
+2. Tes PING dengan command ini
+   ```
+   ping rujapala.it03.com
+   ```
+   
+### Dokumentasi Hasil Pengerjaan
+![Screenshot 2024-10-04 003631](https://github.com/user-attachments/assets/cfc405b1-cae3-4e1d-84e0-ab5caaae4db9)
+
+![Screenshot 2024-10-04 003444](https://github.com/user-attachments/assets/3273a7b1-07d6-4025-ba2e-00047fb38088)
+
+
 
 ---
 ## Soal 5
 ---
+Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yang berada di Nusantara.
 
-!![Screenshot 2024-10-04 003418](https://github.com/user-attachments/assets/c04c3ce0-14c3-4d2a-9430-a272923257ed)
+ ### Penyelesaian
+Jalankan command-command ini di semua web console node client (Srikandi, Samaratungga, GrahamBell, Mulawarman)
+```
+ping sudarsana.it03.com
+```
+```
+ping pasopati.it03.com
+```
+```
+ping pasopati.it03.com
+```
+
+### Dokumentasi Hasil Pengerjaan
+**Srikandi**
+![Screenshot 2024-10-04 003418](https://github.com/user-attachments/assets/c04c3ce0-14c3-4d2a-9430-a272923257ed)
+
+**Samaratungga**
 ![Screenshot 2024-10-04 003432](https://github.com/user-attachments/assets/2cc8eda3-f0e0-46c6-be7d-cd2f6a684a3d)
+
+**GrahamBell**
 ![Screenshot 2024-10-04 003444](https://github.com/user-attachments/assets/1e6a11c1-5e77-4fa2-85a4-a68a882791a0)
+
+**Mulawarman**
 ![Screenshot 2024-10-04 012403](https://github.com/user-attachments/assets/9d858263-4ef1-4e68-9c9a-c5768c832d5e)
 
-!
-!
+
+
