@@ -68,6 +68,7 @@ iface eth0 inet static
 ```
 
 ### Dokumentasi Pengerjaaan
+!![WhatsApp Image 2024-10-03 at 21 38 01_45db5bfc](https://github.com/user-attachments/assets/26505277-6594-43a5-8d4d-9ee838868282)
 
 
 
