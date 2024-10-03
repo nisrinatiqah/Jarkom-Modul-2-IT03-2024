@@ -240,9 +240,39 @@ Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka b
 Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga. 
 
 ### Penyelesaian
+```
+echo 'zone "pasopati.it03.com" {
+    type master;
+    notify yes;
+    file "/etc/bind/jarkom/pasopati.it03.com";
+};' > /etc/bind/named.conf.local
 
+mkdir /etc/bind/jarkom
+
+cp /etc/bind/db.local /etc/bind/jarkom/pasopati.it03.com
+
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     pasopati.it03.com. root.pasopati.it03.com. (
+                        2023101001      ; Serial
+                        604800         ; Refresh
+                        86400         ; Retry
+                        2419200         ; Expire
+                        604800 )       ; Negative Cache TTL
+;
+@       IN      NS      pasopati.it03.com.
+@       IN      A       10.69.0.2     ; IP Stalber
+www     IN      CNAME   pasopati.it03.com.' > /etc/bind/jarkom/pasopati.it03.com
+
+service bind9 restart
+
+```
 
 ### Dokumentasi Pengerjaan
 
+!![Screenshot 2024-10-04 000702](https://github.com/user-attachments/assets/8562cc57-6158-446b-84f6-c5c1016a5621)
 
 
