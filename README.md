@@ -54,45 +54,45 @@ iface eth3 inet static
 ```
 auto eth0
 iface eth0 inet static
-    address 10.65.2.5
-    netmask 255.255.255.0
-    gateway 10.65.2.1
+	address 10.65.2.4
+	netmask 255.255.255.0
+	gateway 10.65.2.1
 ```
 
 **Tanjungkulai (Web Server)**
 ```
 auto eth0
 iface eth0 inet static
-    address 10.65.2.6
-    netmask 255.255.255.0
-    gateway 10.65.2.1
+	address 10.65.2.3
+	netmask 255.255.255.0
+	gateway 10.65.2.1
 ```
 
 **Bedahulu (Web Server)**
 ```
 auto eth0
 iface eth0 inet static
-    address 10.65.2.7
-    netmask 255.255.255.0
-    gateway 10.65.2.1
+	address 10.65.2.2
+	netmask 255.255.255.0
+	gateway 10.65.2.1
 ```
 
 **Kotalingga (Web Server)**
 ```
 auto eth0
 iface eth0 inet static
-    address 10.65.2.4
-    netmask 255.255.255.0
-    gateway 10.65.2.1
+	address 10.65.2.7
+	netmask 255.255.255.0
+	gateway 10.65.2.1
 ```
 
 **Srikandi (Client)**
 ```
 auto eth0
 iface eth0 inet static
-    address 10.65.2.3
-    netmask 255.255.255.0
-    gateway 10.65.2.1
+	address 10.65.2.5
+	netmask 255.255.255.0
+	gateway 10.65.2.1
 ```
 
 **Solok (Load Balancer)**
@@ -108,9 +108,9 @@ iface eth0 inet static
 ```
 auto eth0
 iface eth0 inet static
-    address 10.65.1.5
-    netmask 255.255.255.0
-    gateway 10.65.1.1
+	address 10.65.1.2
+	netmask 255.255.255.0
+	gateway 10.65.1.1
 ```
 
 **GrahamBell (Client)**
@@ -135,9 +135,9 @@ iface eth0 inet static
 ```
 auto eth0
 iface eth0 inet static
-   address 10.65.1.2
-   netmask 255.255.255.0
-   gateway 10.65.1.1
+	address 10.65.1.5
+	netmask 255.255.255.0
+	gateway 10.65.1.1
 ```
 
 Buka web console :
@@ -355,6 +355,51 @@ ping pasopati.it03.com
 **Mulawarman**
 ![Screenshot 2024-10-04 012403](https://github.com/user-attachments/assets/9d858263-4ef1-4e68-9c9a-c5768c832d5e)
 
+
+
+---
+## Soal 6
+---
+Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses domain secara langsung melalui alamat IP domain tersebut. Karena daerah tersebut tidak diketahui secara spesifik, pastikan semua komputer (client) dapat mengakses domain pasopati.xxxx.com melalui alamat IP Kotalingga (Notes: menggunakan pointer record).
+
+### Penyelesaian
+Script :
+```
+echo 'zone "2.65.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/jarkom/2.65.10.in-addr.arpa";
+};' >> /etc/bind/named.conf.local
+
+cp /etc/bind/db.local /etc/bind/jarkom/2.65.10.in-addr.arpa
+
+echo ';
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     pasopati.it03.com. pasopati.it03.com. (
+                        2024050301      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+2.65.10.in-addr.arpa.    IN      NS      pasopati.it03.com.
+7                      IN      PTR     pasopati.it03.com.' > /etc/bind/jarkom/2.65.10.in-addr.arpa
+
+service bind9 restart
+```
+
+
+
+---
+## Soal 7
+---
+Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
+
+### Penyelesaian
+Script :
+```
 
 
 ---
