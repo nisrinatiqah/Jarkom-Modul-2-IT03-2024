@@ -14,7 +14,10 @@
 - [Soal 3](#soal-3)
 - [Soal 4](#soal-4)
 - [Soal 5](#soal-5)
+- [Soal 6](#soal-6)
+- [Soal 7](#soal-7)
 - [Soal 8](#soal-8)
+- [Soal 9](#soal-9)
 
 
 ## Topologi
@@ -398,9 +401,62 @@ service bind9 restart
 Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
 
 ### Penyelesaian
-Script :
+Run di Majapahit :
+```
+echo 'zone "2.65.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/jarkom/2.65.10.in-addr.arpa";
+};' >> /etc/bind/named.conf.local
+
+cp /etc/bind/db.local /etc/bind/jarkom/2.65.10.in-addr.arpa
+
+echo ';
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     pasopati.it03.com. pasopati.it03.com. (
+                        2024050301      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+2.65.10.in-addr.arpa.    IN      NS      pasopati.it03.com.
+7                      IN      PTR     pasopati.it03.com.' > /etc/bind/jarkom/2.65.10.in-addr.arpa
+
+service bind9 restart
 ```
 
+Run di Sriwijaya :
+```
+echo '
+zone "sudarsana.it03.com" {
+        type master;
+        notify yes;
+        also-notify { 10.65.2.4; }; //IP Majapahit
+        allow-transfer { 10.65.2.4; }; //IP Majapahit
+        file "/etc/bind/jarkom/sudarsana.it03.com";
+};
+
+zone "pasopati.it03.com" {
+        type master;
+        notify yes;
+        also-notify { 10.65.2.4; }; //IP Majapahit
+        allow-transfer { 10.65.2.4; }; //IP Majapahit
+        file "/etc/bind/jarkom/pasopati.it03.com";
+};
+
+zone "rujapala.it03.com" {
+        type master;
+        notify yes;
+        also-notify { 10.65.2.4; }; //IP Majapahit
+        allow-transfer { 10.65.2.4; }; //IP Majapahit
+        file "/etc/bind/jarkom/rujapala.it03.com";
+};' > /etc/bind/named.conf.local
+
+service bind9 restart
+```
 
 ---
 ## Soal 8
@@ -446,3 +502,51 @@ Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembu
    ping cakra.sudarsana.it03.com
    ```
    
+
+
+---
+## Soal 9
+---
+Karena terjadi serangan DDOS oleh shikanoko nokonoko koshitantan (NUN), sehingga sistem komunikasinya terhalang. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan dari siren man oleh Frekuensi Freak dan memasukkannya ke subdomain panah.pasopati.xxxx.com dalam folder panah dan pastikan dapat diakses secara mudah dengan menambahkan alias www.panah.pasopati.xxxx.com dan mendelegasikan subdomain tersebut ke Majapahit dengan alamat IP menuju radar di Kotalingga.
+
+### Penyelesaian
+Run di Sriwijaya :
+```
+echo '
+options {
+        directory "/var/cache/bind";
+
+        //dnssec-validation auto;
+        allow-query{any;};
+
+        auth-nxdomain no;    
+        listen-on-v6 { any; };
+};' > /etc/bind/named.conf.options
+
+echo 'zone "panah.pasopati.it03.com" {
+	type master;
+	file "/etc/bind/panah/panah.pasopati.it03.com";
+};' >> /etc/bind/named.conf.local
+
+mkdir /etc/bind/panah
+
+cp /etc/bind/db.local /etc/bind/panah/panah.pasopati.it03.com
+
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     panah.pasopati.it03.com. panah.pasopati.it03.com. (
+                        2024050301      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      panah.pasopati.it03.com.
+@       IN      A       10.65.2.7     ; IP Kotalingga
+www     IN      CNAME   panah.pasopati.it03.com.' > /etc/bind/panah/panah.pasopati.it03.com
+
+service bind9 restart
+```
